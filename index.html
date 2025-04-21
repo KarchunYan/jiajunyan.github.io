@@ -22,6 +22,31 @@ video {
   text-align: center;
   color: #ffffff;
 }
+.pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+       .pagination a {
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #007BFF;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+            transition: background-color 0.3s;
+        }
+
+       .pagination a.active {
+            background-color: #007BFF;
+            color: white;
+            border: 1px solid #007BFF;
+        }
+
+       .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
 </style>
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -71,6 +96,33 @@ video {
     </div>
 
   <!-- Pagination -->
+  <div class="pagination" id="pagination"></div>
+
+    <script>
+        const totalPages = 10;
+        const currentPage = 1;
+
+        function generatePagination() {
+            const pagination = document.getElementById('pagination');
+            for (let i = 1; i <= totalPages; i++) {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = i;
+                if (i === currentPage) {
+                    link.classList.add('active');
+                }
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const currentActive = document.querySelector('.pagination a.active');
+                    currentActive.classList.remove('active');
+                    this.classList.add('active');
+                });
+                pagination.appendChild(link);
+            }
+        }
+
+        generatePagination();
+    </script>
   <div class="w3-center w3-padding-32">
     <div class="w3-bar">
       <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
