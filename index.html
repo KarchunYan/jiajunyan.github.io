@@ -72,7 +72,68 @@ video {
     </div>
 
   <!-- Pagination -->
+  <div id="myModal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img class="modal-content" id="modalImg">
+  </div>
 
+  <script>
+      const images = document.querySelectorAll('.image-grid img');
+      const paginationLinks = document.querySelectorAll('.w3-bar a');
+      const modal = document.getElementById('myModal');
+      const modalImg = document.getElementById('modalImg');
+      let currentPage = 1;
+      const imagesPerPage = 9;
+
+      function onClick(img) {
+          modal.style.display = "block";
+          modalImg.src = img.src;
+      }
+
+      function closeModal() {
+          modal.style.display = "none";
+      }
+
+      function goToPage(page) {
+          currentPage = page;
+          updatePagination();
+          // 隐藏所有图片
+          images.forEach(image => {
+              image.style.display = 'none';
+          });
+          // 显示当前页的图片
+          const startIndex = (currentPage - 1) * imagesPerPage;
+          const endIndex = startIndex + imagesPerPage;
+          for (let i = startIndex; i < endIndex && i < images.length; i++) {
+              images[i].style.display = 'block';
+          }
+      }
+
+      function prevPage() {
+          if (currentPage > 1) {
+              currentPage--;
+              goToPage(currentPage);
+          }
+      }
+
+      function nextPage() {
+          const totalPages = Math.ceil(images.length / imagesPerPage);
+          if (currentPage < totalPages) {
+              currentPage++;
+              goToPage(currentPage);
+          }
+      }
+
+      function updatePagination() {
+          paginationLinks.forEach(link => {
+              link.classList.remove('w3-black');
+          });
+          paginationLinks[currentPage].classList.add('w3-black');
+      }
+
+      // 初始化显示第一页的图片
+      goToPage(1);
+  </script>
 <!--video-->
 <div>
   <div class="item1"><h1>Video</h1></div>
