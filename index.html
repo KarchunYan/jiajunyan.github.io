@@ -22,31 +22,7 @@ video {
   text-align: center;
   color: #ffffff;
 }
-.pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
 
-       .pagination a {
-            padding: 8px 16px;
-            text-decoration: none;
-            color: #007BFF;
-            border: 1px solid #ddd;
-            margin: 0 4px;
-            transition: background-color 0.3s;
-        }
-
-       .pagination a.active {
-            background-color: #007BFF;
-            color: white;
-            border: 1px solid #007BFF;
-        }
-
-       .pagination a:hover:not(.active) {
-            background-color: #ddd;
-        }
 </style>
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -94,48 +70,94 @@ video {
       <img src="/Users/gavinyan/Documents/GitHub/jiajunyan.github.io/picture/IMG_20230110_153813.jpg" style="width:100%" onclick="onClick(this)" alt="Its miniature world">
       <img src="/Users/gavinyan/Documents/GitHub/jiajunyan.github.io/picture/IMG_20230402_234901.jpg" style="width:100%" onclick="onClick(this)" alt="What a beautiful day!">
     </div>
-
+    <div class="image-grid">
+            <img src="https://picsum.photos/600/400?random=1" style="width:40%" onclick="onClick(this)" alt="Seaside at dusk">
+            <img src="https://picsum.photos/600/400?random=2" style="width:40%" onclick="onClick(this)" alt="Witness of love">
+            <img src="https://picsum.photos/600/400?random=3" style="width:40%" onclick="onClick(this)" alt="Idyllic dream house">
+            <img src="https://picsum.photos/600/400?random=4" style="width:30%" onclick="onClick(this)" alt="The horizon line between sky and earth">
+            <img src="https://picsum.photos/600/400?random=5" style="width:100%" onclick="onClick(this)" alt="Get some fries on the pier">
+            <img src="https://picsum.photos/600/400?random=6" style="width:100%" onclick="onClick(this)" alt="Nature again.. At its finest!">
+            <img src="https://picsum.photos/600/400?random=7" style="width:100%" onclick="onClick(this)" alt="Stroll through the garden">
+            <img src="https://picsum.photos/600/400?random=8" style="width:100%" onclick="onClick(this)" alt="Its miniature world">
+            <img src="https://picsum.photos/600/400?random=9" style="width:100%" onclick="onClick(this)" alt="What a beautiful day!">
+        </div>
   <!-- Pagination -->
-  <div class="pagination" id="pagination"></div>
 
-    <script>
-        const totalPages = 10;
-        const currentPage = 1;
-
-        function generatePagination() {
-            const pagination = document.getElementById('pagination');
-            for (let i = 1; i <= totalPages; i++) {
-                const link = document.createElement('a');
-                link.href = '#';
-                link.textContent = i;
-                if (i === currentPage) {
-                    link.classList.add('active');
-                }
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const currentActive = document.querySelector('.pagination a.active');
-                    currentActive.classList.remove('active');
-                    this.classList.add('active');
-                });
-                pagination.appendChild(link);
-            }
-        }
-
-        generatePagination();
-    </script>
   <div class="w3-center w3-padding-32">
-    <div class="w3-bar">
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
-      <a href="#" class="w3-bar-item w3-black w3-button">1</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
-    </div>
+      <div class="w3-bar">
+          <a href="#" class="w3-bar-item w3-button w3-hover-black" onclick="prevPage()">&laquo;</a>
+          <a href="#" class="w3-bar-item w3-black w3-button" onclick="goToPage(1)">1</a>
+          <a href="#" class="w3-bar-item w3-button w3-hover-black" onclick="goToPage(2)">2</a>
+          <a href="#" class="w3-bar-item w3-button w3-hover-black" onclick="goToPage(3)">3</a>
+          <a href="#" class="w3-bar-item w3-button w3-hover-black" onclick="goToPage(4)">4</a>
+          <a href="#" class="w3-bar-item w3-button w3-hover-black" onclick="nextPage()">&raquo;</a>
+      </div>
   </div>
-<div>
-<hr />
-</div>
+
+  <!-- 模态框 -->
+  <div id="myModal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img class="modal-content" id="modalImg">
+  </div>
+
+  <script>
+      const images = document.querySelectorAll('.image-grid img');
+      const paginationLinks = document.querySelectorAll('.w3-bar a');
+      const modal = document.getElementById('myModal');
+      const modalImg = document.getElementById('modalImg');
+      let currentPage = 1;
+      const imagesPerPage = 3;
+
+      function onClick(img) {
+          modal.style.display = "block";
+          modalImg.src = img.src;
+      }
+
+      function closeModal() {
+          modal.style.display = "none";
+      }
+
+      function goToPage(page) {
+          currentPage = page;
+          updatePagination();
+          // 隐藏所有图片
+          images.forEach(image => {
+              image.style.display = 'none';
+          });
+          // 显示当前页的图片
+          const startIndex = (currentPage - 1) * imagesPerPage;
+          const endIndex = startIndex + imagesPerPage;
+          for (let i = startIndex; i < endIndex && i < images.length; i++) {
+              images[i].style.display = 'block';
+          }
+      }
+
+      function prevPage() {
+          if (currentPage > 1) {
+              currentPage--;
+              goToPage(currentPage);
+          }
+      }
+
+      function nextPage() {
+          const totalPages = Math.ceil(images.length / imagesPerPage);
+          if (currentPage < totalPages) {
+              currentPage++;
+              goToPage(currentPage);
+          }
+      }
+
+      function updatePagination() {
+          paginationLinks.forEach(link => {
+              link.classList.remove('w3-black');
+          });
+          paginationLinks[currentPage].classList.add('w3-black');
+      }
+
+      // 初始化显示第一页的图片
+      goToPage(1);
+  </script>
+
 <!--video-->
 <div>
   <div class="item1"><h1>Video</h1></div>
