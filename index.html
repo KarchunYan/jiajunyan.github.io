@@ -98,7 +98,7 @@ video {
   </div>
 
   <script>
-      const images = document.querySelectorAll('.image-grid img');
+      const images = document.querySelectorAll('.iw3-third img');
       const paginationLinks = document.querySelectorAll('.w3-bar a');
       const modal = document.getElementById('myModal');
       const modalImg = document.getElementById('modalImg');
@@ -117,11 +117,11 @@ video {
       function goToPage(page) {
           currentPage = page;
           updatePagination();
-          // 隐藏所有图片
+          //
           images.forEach(image => {
               image.style.display = 'none';
           });
-          // 显示当前页的图片
+          //
           const startIndex = (currentPage - 1) * imagesPerPage;
           const endIndex = startIndex + imagesPerPage;
           for (let i = startIndex; i < endIndex && i < images.length; i++) {
@@ -151,7 +151,6 @@ video {
           paginationLinks[currentPage].classList.add('w3-black');
       }
 
-      // 初始化显示第一页的图片
       goToPage(1);
   </script>
 <!--video-->
