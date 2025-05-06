@@ -155,7 +155,7 @@ video {
          </div>
      </div>
 
-     <!-- 模态框 -->
+
      <div id="myModal" class="modal">
          <span class="close" onclick="closeModal()">&times;</span>
          <img class="modal-content" id="modalImg">
@@ -181,11 +181,11 @@ video {
          function goToPage(page) {
              currentPage = page;
              updatePagination();
-             // 隐藏所有图片
+
              images.forEach(image => {
                  image.style.display = 'none';
              });
-             // 显示当前页的图片
+
              const startIndex = (currentPage - 1) * imagesPerPage;
              const endIndex = startIndex + imagesPerPage;
              for (let i = startIndex; i < endIndex && i < images.length; i++) {
@@ -212,11 +212,11 @@ video {
              paginationLinks.forEach(link => {
                  link.classList.remove('w3-black');
              });
-             // 修正索引，因为链接索引从 0 开始
+
              paginationLinks[currentPage].classList.add('w3-black');
          }
 
-         // 初始化显示第一页的图片
+
          goToPage(1);
      </script>
 
@@ -224,7 +224,7 @@ video {
 <div>
   <div class="item1"><h1>Video</h1></div>
     <video width="70%" controls>
-    <source src="video/teklab_new.mp4" type="video/mp4">
+    <source src="video/Teklab promo.mp4" type="video/mp4">
     </video>
     <p>
 <a href="https://www.youtube.com/@Katsun-Ngan" class="video-btn-link">
